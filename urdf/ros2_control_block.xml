@@ -1,0 +1,39 @@
+  <ros2_control name="mycobot_system" type="system">
+    <hardware>
+      <plugin>mycobot_hardware/MyCobotSystem</plugin>
+      <param name="driver">mock</param>
+      <param name="port">/dev/ttyUSB0</param>
+      <param name="baud">115200</param>
+      <param name="speed">30</param>
+    </hardware>
+    <joint name="joint2_to_joint1">
+      <param name="servo_id">1</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="joint3_to_joint2">
+      <param name="servo_id">2</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="joint4_to_joint3">
+      <param name="servo_id">3</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="joint5_to_joint4">
+      <param name="servo_id">4</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="joint6_to_joint5">
+      <param name="servo_id">5</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="joint6output_to_joint6">
+      <param name="servo_id">6</param>
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+  </ros2_control>

@@ -1,0 +1,7 @@
+<library path="mycobot_hardware">
+  <class name="mycobot_hardware/MyCobotSystem"
+         type="mycobot_hardware::MyCobotSystem"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>myCobot 280 system hardware interface</description>
+  </class>
+</library>
