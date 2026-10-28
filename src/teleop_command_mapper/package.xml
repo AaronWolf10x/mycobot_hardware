@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>teleop_command_mapper</name>
+  <version>0.0.1</version>
+  <description>
+    Keyboard teleop that switches between driving the rover base (/cmd_vel)
+    and jogging the mycobot arm's end-effector in Cartesian space, converting
+    jogs into joint position targets via KDL differential IK.
+  </description>
+  <maintainer email="tranhuynh7777777@gmail.com">Tran Huynh</maintainer>
+  <license>Apache-2.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
