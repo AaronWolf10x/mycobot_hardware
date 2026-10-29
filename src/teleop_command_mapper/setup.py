@@ -27,6 +27,7 @@ setup(
             'rover_odom_sim = teleop_command_mapper.rover_odom_sim:main',
             'joy_command_mapper = teleop_command_mapper.joy_command_mapper_node:main',
             'joy_sim_gui = teleop_command_mapper.joy_sim_gui:main',
+            'arm_command_bridge = teleop_command_mapper.arm_command_bridge:main',
         ],
     },
 )

@@ -8,10 +8,18 @@
 #include <utility>
 #include <vector>
 
+// SerialDriver below talks to the real arm over a POSIX serial fd (termios +
+// select()). None of those headers exist on Windows/MSVC, and SerialDriver is
+// untested hardware-facing code anyway (see its own comment) -- so on Windows
+// we simply don't compile it; only MockDriver is available there. See the
+// matching #ifndef _WIN32 guards around the SerialDriver class below and
+// around its instantiation in on_configure().
+#ifndef _WIN32
 #include <fcntl.h>
 #include <sys/select.h>
 #include <termios.h>
 #include <unistd.h>
+#endif
 
 #include "hardware_interface/system_interface.hpp"
 #include "pluginlib/class_list_macros.hpp"
@@ -63,6 +71,8 @@ private:
 // Real myCobot over serial. Frame format: FE FE <len> <cmd> <data...> FA
 // where <len> = number of data bytes + 2. Angles are int16, big-endian, 0.01 deg.
 // UNTESTED: verify against Elephant Robotics' protocol docs / pymycobot first.
+// Windows-only note: not available on Windows builds, see on_configure() below.
+#ifndef _WIN32
 class SerialDriver : public ArmDriver
 {
 public:
@@ -159,6 +169,7 @@ private:
   int speed_;
   int fd_ = -1;
 };
+#endif  // _WIN32
 
 // 2) The ros2_control hardware interface
 using hardware_interface::CallbackReturn;
@@ -228,7 +239,15 @@ public:
   CallbackReturn on_configure(const rclcpp_lifecycle::State &) override
   {
     if (driver_name_ == "serial") {
+#ifndef _WIN32
       driver_ = std::make_unique<SerialDriver>(port_, baud_, speed_);
+#else
+      RCLCPP_ERROR(get_logger(),
+        "driver 'serial' is not available on Windows builds (it needs POSIX "
+        "termios/select); use driver:=mock here, or build on Linux for the "
+        "real arm.");
+      return CallbackReturn::ERROR;
+#endif
     } else {
       driver_ = std::make_unique<MockDriver>();
     }
